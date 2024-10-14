@@ -1,0 +1,1659 @@
+ID,Pasta,faultyVersion,correctVersion,faultLocation,Dificuldade,Dir,Date,Difficulty
+45004566,abc271_c,"from collections import deque
+
+N = int(input())
+A = [int(x) for x in input().split()]
+
+A.sort()
+
+deq = deque()
+se = set()
+
+non_need = deque()
+for a in A:
+    if a not in se:
+        se.add(a)
+        deq.append(a)
+    else:
+        non_need.append(a)
+
+deq = deq + non_need
+
+for i in range(N):
+    ni = i + 1
+    if deq and deq[0] == ni:
+        deq.popleft()
+    elif len(deq) >= 2:
+        deq.pop()
+        deq.pop()
+    else:
+        print(i)
+        break
+","from collections import deque
+
+N = int(input())
+A = [int(x) for x in input().split()]
+
+A.sort()
+
+deq = deque()
+se = set()
+
+non_need = deque()
+for a in A:
+    if a not in se:
+        se.add(a)
+        deq.append(a)
+    else:
+        non_need.append(a)
+
+deq = deq + non_need
+
+for i in range(N):
+    ni = i + 1
+    if deq and deq[0] == ni:
+        deq.popleft()
+    elif len(deq) >= 2:
+        deq.pop()
+        deq.pop()
+    else:
+        print(i)
+        break
+
+    if ni == N:
+        print(ni)
+",31,c,abc271_c/45004566,2022-10-01,842
+45528883,abc272_e,"n, m = map(int, input().split())
+a = list(map(int, input().split()))
+d = [set() for _ in range(m)]
+
+for i in range(n):
+  delta = -(i+1)//a[i] - 2
+  for j in range(max(0, delta), m):
+    tmp = (i+1)*(j+1)+a[i]
+    if tmp > n+1:
+      break
+    if 0 <= tmp:
+      d[j].add(tmp)
+
+ans = [0]*m
+for i in range(m):
+  for j in range(len(d[i])+2):
+    if j not in d[i]:
+      ans[i] = j
+      break
+
+
+print(*ans, sep='\n')
+","n, m = map(int, input().split())
+a = list(map(int, input().split()))
+d = [set() for _ in range(m)]
+
+for i in range(n):
+  delta = -a[i]//(i+1) - 1
+  for j in range(max(0, delta), m):
+    tmp = (i+1)*(j+1)+a[i]
+    if tmp > n+1:
+      break
+    if 0 <= tmp:
+      d[j].add(tmp)
+
+ans = [0]*m
+for i in range(m):
+  for j in range(len(d[i])+2):
+    if j not in d[i]:
+      ans[i] = j
+      break
+
+
+print(*ans, sep='\n')
+",6,e,abc272_e/45528883,2022-10-08,1434
+45044587,abc257_c,"""""""
+毎回hatのビット列を生成して確かめるっていうのがだめ
+境目を動かしていって、境目付近を見ればいい
+""""""
+
+n = int(input())
+s = list(input())
+w = list(map(int, input().split()))
+
+people = []
+# 正解数
+# 最初、0番目の人より左にあって、全て1と予測するので1の数をカウントしておく
+cnt = 0
+for i in range(n):
+    people.append((w[i], s[i]))
+    if s[i] == '1':
+        cnt += 1
+people.sort()
+
+ans = cnt
+for i in range(n):  # 左から仕切りをごかす
+    w, s = people[i]
+
+    # 0の人を飛び越えたら1足す
+    if s == '0':
+        cnt += 1
+    # 1の人を飛び越えたら1減らす
+    if s == '1':
+        cnt -= 1
+
+    # 隣の人と体重が同じならそれは境界とはいえない
+    # ansの更新を行わない(cntの計算だけしておいてスキップ)
+    if i+1 >= n or w != people[i+1]:
+        ans = max(ans, cnt)
+
+print(ans)
+","""""""
+毎回hatのビット列を生成して確かめるっていうのがだめ
+境目を動かしていって、境目付近を見ればいい
+""""""
+
+n = int(input())
+s = list(input())
+w = list(map(int, input().split()))
+
+people = []
+# 正解数
+# 最初、0番目の人より左にあって、全て1と予測するので1の数をカウントしておく
+cnt = 0
+for i in range(n):
+    people.append((w[i], s[i]))
+    if s[i] == '1':
+        cnt += 1
+people.sort()
+
+ans = cnt
+for i in range(n):  # 左から仕切りをごかす
+    w, s = people[i]
+
+    # 0の人を飛び越えたら1足す
+    if s == '0':
+        cnt += 1
+    # 1の人を飛び越えたら1減らす
+    if s == '1':
+        cnt -= 1
+
+    # 隣の人と体重が同じならそれは境界とはいえない
+    # ansの更新を行わない(cntの計算だけしておいてスキップ)
+    if i+1 >= n or w != people[i+1][0]:
+        ans = max(ans, cnt)
+
+print(ans)
+",33,c,abc257_c/45044587,2022-06-25,678
+44815699,abc229_b,"import sys
+
+a, b = input().split()
+
+n = min(len(a), len(b))
+
+for i in range(1, n):
+    if int(a[-i])+int(b[-i]) > 9:
+        print(""Hard"")
+        sys.exit()
+print(""Easy"")
+    ","import sys
+
+a, b = input().split()
+
+n = min(len(a), len(b))
+
+for i in range(1, n+1):
+    if int(a[-i])+int(b[-i]) > 9:
+        print(""Hard"")
+        sys.exit()
+print(""Easy"")
+    ",7,b,abc229_b/44815699,2021-11-27,42
+54926937,abc355_c,"N,T = map(int, input().split())
+A = list(map(int, input().split()))
+
+horizontal = [[] for _ in range(N)]
+vertical = [[] for _ in range(N)]
+diagonal = [[],[]]
+
+ans = -1
+for i,a in enumerate(A):
+    row = (a-1) // N
+    col = (a-1) % N
+    horizontal[row].append(a)
+    vertical[col].append(a)
+    if row == col: diagonal[0].append(a)
+    if row+col == N-1: diagonal[1].append(a)
+    if (len(horizontal[row]) == N) or (len(vertical[col-1]) == N) or (len(diagonal[0])) == N or (len(diagonal[1])) == N:
+        ans = i+1
+        break
+print(ans)","N,T = map(int, input().split())
+A = list(map(int, input().split()))
+
+horizontal = [[] for _ in range(N)]
+vertical = [[] for _ in range(N)]
+diagonal = [[],[]]
+
+ans = -1
+for i,a in enumerate(A):
+    row = (a-1) // N
+    col = (a-1) % N
+    horizontal[row].append(a)
+    vertical[col].append(a)
+    if row == col: diagonal[0].append(a)
+    if row+col == N-1: diagonal[1].append(a)
+    if (len(horizontal[row]) == N) or (len(vertical[col]) == N) or (len(diagonal[0])) == N or (len(diagonal[1])) == N:
+        ans = i+1
+        break
+print(ans)",16,c,abc355_c/54926937,2024-05-25,325
+54238360,abc323_b,"N = int(input())
+S = [""""] * N
+for i in range(N):
+    S[i] = input()
+
+C = 0
+A = [0] * N
+
+for i in range(N):
+    for j in range(N):
+        if S[i][j] == ""o"":
+            C += 1
+    A[i] = [C, i+1]
+    C = 0
+
+print(A)
+
+Y = 0
+
+for i in range(N):
+    Y = max(Y, A[i][0])
+
+for i in range(N):
+    A[i][0] = Y - A[i][0]
+
+A.sort(key=lambda d:(d[0], d[1]))
+
+D = [0]*N
+
+for k in range(N):
+    D[k] = A[k][1]
+
+print(A)
+
+print(*D)
+
+
+","N = int(input())
+S = [""""] * N
+for i in range(N):
+    S[i] = input()
+
+C = 0
+A = [0] * N
+
+for i in range(N):
+    for j in range(N):
+        if S[i][j] == ""o"":
+            C += 1
+    A[i] = [C, i+1]
+    C = 0
+
+
+Y = 0
+
+for i in range(N):
+    Y = max(Y, A[i][0])
+
+for i in range(N):
+    A[i][0] = Y - A[i][0]
+
+A.sort(key=lambda d:(d[0], d[1]))
+
+D = [0]*N
+
+for k in range(N):
+    D[k] = A[k][1]
+
+
+print(*D)
+
+
+",0,b,abc323_b/54238360,2023-10-07,75
+53564647,arc171_a,"for _ in range(int(input())):
+	N, A, B = map(int, input().split())
+	if A <= N // 2:
+		print(""Yes"" if B <= ((N + 1) // 2) * (N - A) else ""No"")
+	elif A < N:
+		print(""Yes"" if B <= (N - A) ** 2 else ""No"")
+	else:
+		print(""No"")","for _ in range(int(input())):
+	N, A, B = map(int, input().split())
+	if A <= N // 2:
+		print(""Yes"" if B <= ((N + 1) // 2) * (N - A) else ""No"")
+	elif A <= N:
+		print(""Yes"" if B <= (N - A) ** 2 else ""No"")
+	else:
+		print(""No"")",5,a,arc171_a/53564647,2024-02-04,614
+45039073,abc246_d,"n = int(input())
+
+def f(a, b):
+    return a*a*a + a*a*b + a*b*b + b*b*b
+
+ni = 10**6
+ans = float('inf')
+for a in range(1, ni+1):
+    l = -1
+    r = 10**6+1
+    while r - l > 1:
+        b = (r+l) // 2
+        if f(a, b) < n:
+            l = b
+        else:
+            r = b
+    ans = min(ans, f(a, r))
+print(ans)","n = int(input())
+
+def f(a, b):
+    return a*a*a + a*a*b + a*b*b + b*b*b
+
+ni = 10**6
+ans = float('inf')
+for a in range(ni+1):
+    l = -1
+    r = 10**6+1
+    while r - l > 1:
+        b = (r+l) // 2
+        if f(a, b) < n:
+            l = b
+        else:
+            r = b
+    ans = min(ans, f(a, r))
+print(ans)",8,d,abc246_d/45039073,2022-04-02,1148
+53797654,abc347_e,"# INF = 1<<60 # 1152921504606846976 ~ 10^18
+
+# def meguru_bisect(ng, ok):
+#     while ok - ng > 1:
+#         mid = (ng + ok) // 2
+#         if is_ok(mid):  # 小さくできる
+#             ok = mid
+#         else:
+#             ng = mid  # 大きくしないといけない
+#     return ok
+
+import sys
+
+
+def input():
+    return sys.stdin.readline()[:-1]
+
+
+# sys.setrecursionlimit(10**6)
+
+N, Q = map(int, input().split())
+A = list(map(int, input().split()))
+
+types = []
+from collections import defaultdict
+d = defaultdict(int)
+for a in A:
+    if d[a]%2==0:
+        types.append(0)
+    else:
+        types.append(1)
+    d[a] += 1
+
+cumsum = [0]*(Q+1)
+l = 0
+for i, t in enumerate(types):
+    if t==0:
+        l += 1
+    else:
+        l -= 1
+    if i < Q+2:
+        cumsum[i+1] = cumsum[i] + l
+
+ans = [0]*(N+1)
+pre = [-1]*(N+1)
+for i, a in enumerate(A):
+    if pre[a] == -1:
+        pre[a] = i+1
+    else:
+        ans[a] += cumsum[i] - cumsum[pre[a]-1]
+        pre[a] = -1
+
+for i, x in enumerate(pre):
+    if x != -1:
+        ans[i] += cumsum[-1] - cumsum[pre[i]-1]
+print(f""{ans[1:]}"")
+","# INF = 1<<60 # 1152921504606846976 ~ 10^18
+
+# def meguru_bisect(ng, ok):
+#     while ok - ng > 1:
+#         mid = (ng + ok) // 2
+#         if is_ok(mid):  # 小さくできる
+#             ok = mid
+#         else:
+#             ng = mid  # 大きくしないといけない
+#     return ok
+
+import sys
+
+
+def input():
+    return sys.stdin.readline()[:-1]
+
+
+# sys.setrecursionlimit(10**6)
+
+N, Q = map(int, input().split())
+A = list(map(int, input().split()))
+
+types = []
+from collections import defaultdict
+d = defaultdict(int)
+for a in A:
+    if d[a]%2==0:
+        types.append(0)
+    else:
+        types.append(1)
+    d[a] += 1
+
+cumsum = [0]*(Q+1)
+l = 0
+for i, t in enumerate(types):
+    if t==0:
+        l += 1
+    else:
+        l -= 1
+    if i < Q+2:
+        cumsum[i+1] = cumsum[i] + l
+
+ans = [0]*(N+1)
+pre = [-1]*(N+1)
+for i, a in enumerate(A):
+    if pre[a] == -1:
+        pre[a] = i+1
+    else:
+        ans[a] += cumsum[i] - cumsum[pre[a]-1]
+        pre[a] = -1
+
+for i, x in enumerate(pre):
+    if x != -1:
+        ans[i] += cumsum[-1] - cumsum[pre[i]-1]
+print(*ans[1:])
+",56,e,abc347_e/53797654,2024-03-30,1166
+33208299,arc134_d,"import sys
+input = lambda: sys.stdin.readline().rstrip()
+ii = lambda: int(input())
+mi = lambda: map(int, input().split())
+li = lambda: list(mi())
+INF = 2 ** 63 - 1
+mod = 998244353
+
+n = ii()
+
+a = li()
+
+a1 = a[:n]
+a2 = a[n:]
+
+p = min(a1)
+t =[]
+ind = -1
+for i in range(n):
+    if a1[i] == p:
+        t.append((a1[i], a2[i]))
+        ind = i
+if sorted(t)[0][1] <= p:
+    print(*sorted(t)[0])
+else:
+    ans1 = []
+    ans2 = []
+    for v1, v2 in t:
+        ans1.append(v1)
+        ans2.append(v2)
+    p = []
+    for i in range(ind + 1, n):
+        if a1[i] < ans2[0]:
+            p.append((a1[i], i))
+    p.sort()
+    nowi = ind
+
+    for v, i in p:
+        if nowi < i:
+            ans1.append(a1[i])
+            ans2.append(a2[i])
+    
+    ans = ans1 + ans2
+    ans1 = []
+    ans2 = []
+    for v1, v2 in t:
+        ans1.append(v1)
+        ans2.append(v2)
+    p = []
+    for i in range(ind + 1, n):
+        if a1[i] <= ans2[0]:
+            p.append((a1[i], i))
+    p.sort()
+    nowi = ind
+
+    for v, i in p:
+        if nowi < i:
+            ans1.append(a1[i])
+            ans2.append(a2[i])
+    
+    ans = min(ans, ans1 + ans2)
+    print(*ans)
+","import sys
+input = lambda: sys.stdin.readline().rstrip()
+ii = lambda: int(input())
+mi = lambda: map(int, input().split())
+li = lambda: list(mi())
+INF = 2 ** 63 - 1
+mod = 998244353
+
+n = ii()
+
+a = li()
+
+a1 = a[:n]
+a2 = a[n:]
+
+p = min(a1)
+t =[]
+ind = -1
+for i in range(n):
+    if a1[i] == p:
+        t.append((a1[i], a2[i]))
+        ind = i
+if sorted(t)[0][1] <= p:
+    print(*sorted(t)[0])
+else:
+    ans1 = []
+    ans2 = []
+    for v1, v2 in t:
+        ans1.append(v1)
+        ans2.append(v2)
+    p = []
+    for i in range(ind + 1, n):
+        if a1[i] < ans2[0]:
+            p.append((a1[i], i))
+    p.sort()
+    nowi = ind
+
+    for v, i in p:
+        if nowi < i:
+            ans1.append(a1[i])
+            ans2.append(a2[i])
+            nowi = i
+    
+    ans = ans1 + ans2
+    ans1 = []
+    ans2 = []
+    for v1, v2 in t:
+        ans1.append(v1)
+        ans2.append(v2)
+    p = []
+    for i in range(ind + 1, n):
+        if a1[i] <= ans2[0]:
+            p.append((a1[i], i))
+    p.sort()
+    nowi = ind
+
+    for v, i in p:
+        if nowi < i:
+            ans1.append(a1[i])
+            ans2.append(a2[i])
+            nowi = i
+    
+    ans = min(ans, ans1 + ans2)
+    print(*ans)
+",42,d,arc134_d/33208299,2022-01-29,1998
+45536785,abc261_a,"l1,r1,l2,r2=map(int,input().split())
+ans=0
+for i in range(0,100):
+    if l1<i<=r1 and l2<i<=r2:
+        ans+=1
+print(ans)","l1,r1,l2,r2=map(int,input().split())
+ans=0
+for i in range(0,101):
+    if l1<i<=r1 and l2<i<=r2:
+        ans+=1
+print(ans)",3,a,abc261_a/45536785,2022-07-23,51
+45037018,abc268_d,"# import pypyjit;pypyjit.set_param(""max_unroll_recursion=-1"")
+# from bisect import *
+# from collections import *
+# from heapq import *
+from itertools import *
+
+# from math import *
+# from datetime import *
+# from decimal import *  # PyPyだと遅い
+# from string import ascii_lowercase,ascii_uppercase
+# import numpy as np
+import sys
+
+# sys.setrecursionlimit(10**6) # PyPyだと遅い
+INF = 1 << 61
+MOD = 998244353
+# MOD = 10**9 + 7
+File = sys.stdin
+
+
+def input():
+    return File.readline()[:-1]
+
+
+# ///////////////////////////////////////////////////////////////////////////
+
+
+N, M = map(int, input().split())
+S = [input() for _ in range(N)]
+T = set([input() for _ in range(M)])
+
+total_length = sum([len(i) for i in S])
+
+under = [
+    [""_"" * j for j in i]
+    for i in product(list(range(1, 16 - total_length + 1)), repeat=N - 1)
+    if 3 <= sum(i) <= 16 - total_length
+]
+
+for i in permutations(S):
+    for j in under:
+        l = []
+        for k in range(N):
+            l.append(i[k])
+            if k < N - 1:
+                l.append(j[k])
+        st = """".join((l))
+        if st not in T and 3 <= len(st) <= 16:
+            print(st)
+            exit()
+
+print(-1)
+","# import pypyjit;pypyjit.set_param(""max_unroll_recursion=-1"")
+# from bisect import *
+# from collections import *
+# from heapq import *
+from itertools import *
+
+# from math import *
+# from datetime import *
+# from decimal import *  # PyPyだと遅い
+# from string import ascii_lowercase,ascii_uppercase
+# import numpy as np
+import sys
+
+# sys.setrecursionlimit(10**6) # PyPyだと遅い
+INF = 1 << 61
+MOD = 998244353
+# MOD = 10**9 + 7
+File = sys.stdin
+
+
+def input():
+    return File.readline()[:-1]
+
+
+# ///////////////////////////////////////////////////////////////////////////
+
+
+N, M = map(int, input().split())
+S = [input() for _ in range(N)]
+T = set([input() for _ in range(M)])
+
+total_length = sum([len(i) for i in S])
+
+under = [
+    [""_"" * j for j in i]
+    for i in product(list(range(1, 16 - total_length + 1)), repeat=N - 1)
+    if sum(i) <= 16 - total_length
+]
+
+for i in permutations(S):
+    for j in under:
+        l = []
+        for k in range(N):
+            l.append(i[k])
+            if k < N - 1:
+                l.append(j[k])
+        st = """".join((l))
+        if st not in T and 3 <= len(st) <= 16:
+            print(st)
+            exit()
+
+print(-1)
+",37,d,abc268_d/45037018,2022-09-10,1309
+43234436,arc162_c,"from itertools import permutations as perm
+from itertools import combinations, product, combinations_with_replacement, groupby, accumulate
+from fractions import Fraction
+from collections import *
+from sys import stdin
+from bisect import *
+from heapq import *
+
+#import numpy as np
+# from math import *
+ 
+g   = lambda : stdin.readline().strip()
+#[gl[0], dl[1], ...]
+gl  = lambda : g().split()
+#gl -> int
+gil = lambda : [int(var) for var in gl()]
+#[n] = gil(""A"") -> n = A
+#[n,m] = gil(""A B"") -> n = A, M = B
+#n=gil(""A B C D ..."") -> n = [A, B, C, D, ...]
+
+gfl = lambda : [float(var) for var in gl()]
+
+gcl = lambda : list(g())
+
+gbs = lambda : [int(var) for var in g()]
+#[n]= gbs(""A"") -> n = A
+
+arr = lambda l:"" "".join(str(n) for n in l)  
+#arr([1,2,3,...]) -> ""1 2 3 ..."" 配列で答えをprintする時に使う
+
+mod = int(1e9)+7
+inf = 2**30
+
+[T]=gil()
+def query():
+	[N,K]=gil()
+	
+	Tree = [[] for i in range(N+1)]
+	P = gil()
+	A = gil()
+
+	for i,p in enumerate(P,1):
+		p -= 1
+		Tree[p].append(i)
+		Tree[i].append(p)
+
+	P=[-1]+P
+	
+	for i in range(N):
+				
+		num = 0
+		s = set()
+		q = [i]
+		while q:
+			now = q.pop()
+			if A[now] == -1:
+				num += 1
+			else:
+				s.add(A[now])
+			
+			for nex in Tree[now]:
+				if nex == P[now]-1:
+					continue
+				q.append(nex)
+			
+		mex = -1
+		need = [0]*(K+1)
+		for j in range(K+1):
+			if j in s:
+				need[j]=1
+		
+		if need[K] or num > 1:
+			continue #""Bob""かもしれない
+		
+		count = 0
+		
+		for j in range(K):
+			if need[j] == 0:
+				count += 1
+				
+		if count == 0:
+			return ""Alice""
+		if count == 1 and num == 1:
+			return ""Alice""
+	
+		return ""Bob""	
+		
+def main():
+	for _ in range(T):
+		print(query())
+
+if __name__ == '__main__':
+	main()","from itertools import permutations as perm
+from itertools import combinations, product, combinations_with_replacement, groupby, accumulate
+from fractions import Fraction
+from collections import *
+from sys import stdin
+from bisect import *
+from heapq import *
+
+#import numpy as np
+# from math import *
+ 
+g   = lambda : stdin.readline().strip()
+#[gl[0], dl[1], ...]
+gl  = lambda : g().split()
+#gl -> int
+gil = lambda : [int(var) for var in gl()]
+#[n] = gil(""A"") -> n = A
+#[n,m] = gil(""A B"") -> n = A, M = B
+#n=gil(""A B C D ..."") -> n = [A, B, C, D, ...]
+
+gfl = lambda : [float(var) for var in gl()]
+
+gcl = lambda : list(g())
+
+gbs = lambda : [int(var) for var in g()]
+#[n]= gbs(""A"") -> n = A
+
+arr = lambda l:"" "".join(str(n) for n in l)  
+#arr([1,2,3,...]) -> ""1 2 3 ..."" 配列で答えをprintする時に使う
+
+mod = int(1e9)+7
+inf = 2**30
+
+[T]=gil()
+def query():
+	[N,K]=gil()
+	
+	Tree = [[] for i in range(N+1)]
+	P = gil()
+	A = gil()
+
+	for i,p in enumerate(P,1):
+		p -= 1
+		Tree[p].append(i)
+		Tree[i].append(p)
+
+	P=[-1]+P
+	
+	for i in range(N):
+				
+		num = 0
+		s = set()
+		q = [i]
+		while q:
+			now = q.pop()
+			if A[now] == -1:
+				num += 1
+			else:
+				s.add(A[now])
+			
+			for nex in Tree[now]:
+				if nex == P[now]-1:
+					continue
+				q.append(nex)
+			
+		mex = -1
+		need = [0]*(K+1)
+		for j in range(K+1):
+			if j in s:
+				need[j]=1
+		
+		if need[K] or num > 1:
+			continue #""Bob""かもしれない
+		
+		count = 0
+		
+		for j in range(K):
+			if need[j] == 0:
+				count += 1
+				
+		if count == 0:
+			return ""Alice""
+		if count == 1 and num == 1:
+			return ""Alice""
+	
+	return ""Bob""	
+		
+def main():
+	for _ in range(T):
+		print(query())
+
+if __name__ == '__main__':
+	main()",86,c,arc162_c/43234436,2023-06-18,1655
+45920869,abc321_g,"n,m,*E=map(int,open(0).read().split())
+*X,=*D,=C=[0]*2**n
+*F,P=1,998244353
+while m:m-=1;C[1<<E[m]-1]+=1;D[1<<E[~m]-1]+=1;F+=F[-1]*len(F)%P,
+for i in range(1<<n):
+ j=k=i-1&i;c=C[i]=C[j]+C[i^j];d=D[i]=D[j]+D[i^j];x=F[c]
+ while j:x-=X[i^j]*F[C[j]];j=j-1&k
+ X[i]=x*(c==d)%P
+print(sum(x*F[c]for x,c in zip(X,C[::-1]))*pow(F[-1],P-2,P)%P)","n,m,*E=map(int,open(0).read().split())
+*X,=*D,=C=[0]*2**n
+*F,P=1,998244353
+while m:m-=1;C[1<<E[m]-1]+=1;D[1<<E[~m]-1]+=1;F+=F[-1]*len(F)%P,
+for i in range(1<<n):
+ j=k=i-1&i;c=C[i]=C[j]+C[i^j];d=D[i]=D[j]+D[i^j];x=F[c]
+ while j:x-=X[i^j]*F[C[j]];j=j-1&k
+ X[i]=x*(c==d)%P
+print(sum(x*F[c]for x,c in zip(X,C[::-1]))*pow(F[-1],P-2,P)%P-1)",9,g,abc321_g/45920869,2023-09-23,2439
+45556624,abc251_e,"import sys
+
+read = sys.stdin.read
+readline = sys.stdin.readline
+readlines = sys.stdin.readlines
+
+
+N, *A = map(int, read().split())
+inf = 1 << 60
+
+ans = inf
+
+dp = [[inf, inf] for _ in range(N + 1)]
+dp[1][0] = 0
+for i in range(1, N):
+    dp[i + 1][0] = dp[i][1]
+    dp[i + 1][1] = min(dp[i]) + A[i]
+
+ans = min(ans, dp[N][1])
+
+dp = [[inf, inf] for _ in range(N + 1)]
+dp[1][1] = A[0]
+for i in range(1, N):
+    dp[i + 1][0] = dp[i][1]
+    dp[i + 1][1] = min(dp[i]) + A[i]
+
+ans = min(ans, dp[N][0])
+
+print(ans)
+","import sys
+
+read = sys.stdin.read
+readline = sys.stdin.readline
+readlines = sys.stdin.readlines
+
+
+N, *A = map(int, read().split())
+inf = 1 << 60
+
+ans = inf
+
+dp = [[inf, inf] for _ in range(N + 1)]
+dp[1][0] = 0
+for i in range(1, N):
+    dp[i + 1][0] = dp[i][1]
+    dp[i + 1][1] = min(dp[i]) + A[i]
+
+ans = min(ans, dp[N][1])
+
+dp = [[inf, inf] for _ in range(N + 1)]
+dp[1][1] = A[0]
+for i in range(1, N):
+    dp[i + 1][0] = dp[i][1]
+    dp[i + 1][1] = min(dp[i]) + A[i]
+
+ans = min(ans, min(dp[N]))
+
+print(ans)
+",27,e,abc251_e/45556624,2022-05-14,1227
+54010383,abc237_d,"class Node:
+  def __init__(self, value=""""):
+    self.nex = None
+    self.pre = None
+    self.value = value
+
+
+#N = 5
+#S = ""LRRLR""
+N = int(input())
+S = input()
+
+nil = Node()
+nil.nex = nil
+nil.pre = nil
+recent_node = Node(0)
+recent_node.nex = nil
+recent_node.pre = nil
+
+for i in range(1, N+1):
+  new_node = Node(i)
+  if S[i-1] == ""L"":
+    A = recent_node.pre
+    A.nex = new_node
+    new_node.nex = recent_node
+    new_node.pre = A
+    recent_node.pre = new_node
+  else: 
+    B = recent_node.nex
+    B.pre = new_node
+    new_node.nex = B
+    new_node.pre = recent_node
+    recent_node.nex = new_node
+
+  recent_node = new_node
+  print(recent_node.value)
+
+after_recent = list()
+n = recent_node
+while(n != nil):
+  #print(n.value)
+  after_recent.append(n.value)
+  n = n.nex 
+
+before_recent = list()
+n = recent_node
+while(n != nil):
+  #print(n.value)
+  before_recent.append(n.value)
+  n = n.pre
+
+before_recent.reverse()
+ans = before_recent[:-1] + after_recent
+print(*ans)
+","class Node:
+  def __init__(self, value=""""):
+    self.nex = None
+    self.pre = None
+    self.value = value
+
+
+#N = 5
+#S = ""LRRLR""
+N = int(input())
+S = input()
+
+nil = Node()
+nil.nex = nil
+nil.pre = nil
+recent_node = Node(0)
+recent_node.nex = nil
+recent_node.pre = nil
+
+for i in range(1, N+1):
+  new_node = Node(i)
+  if S[i-1] == ""L"":
+    A = recent_node.pre
+    A.nex = new_node
+    new_node.nex = recent_node
+    new_node.pre = A
+    recent_node.pre = new_node
+  else: 
+    B = recent_node.nex
+    B.pre = new_node
+    new_node.nex = B
+    new_node.pre = recent_node
+    recent_node.nex = new_node
+
+  recent_node = new_node
+  #print(recent_node.value)
+
+after_recent = list()
+n = recent_node
+while(n != nil):
+  #print(n.value)
+  after_recent.append(n.value)
+  n = n.nex 
+
+before_recent = list()
+n = recent_node
+while(n != nil):
+  #print(n.value)
+  before_recent.append(n.value)
+  n = n.pre
+
+before_recent.reverse()
+ans = before_recent[:-1] + after_recent
+print(*ans)
+
+
+
+",36,d,abc237_d/54010383,2022-01-30,544
+44877017,abc242_a,"#!/usr/bin/env python3
+
+import sys
+
+a, b, c, x = map(int, input().split())
+
+res = 0.0
+if x <= a:
+   res = 100.0
+elif x <= b:
+   res = c / (b - a)
+
+print('%.9f' % (res))
+
+","#!/usr/bin/env python3
+
+import sys
+
+a, b, c, x = map(int, input().split())
+
+res = 0.0
+if x <= a:
+   res = 1.0
+elif x <= b:
+   res = c / (b - a)
+
+print('%.9f' % (res))
+
+",9,a,abc242_a/44877017,2022-03-05,37
+54981846,abc354_a,"H = int(input())
+P = 0
+
+for i in range(H):
+  P += pow(2, i)
+  if P > H:
+    print(i + 1)
+    break","H = int(input())
+P = 0
+
+for i in range(H + 1):
+  P += pow(2, i)
+  if P > H:
+    print(i + 1)
+    break",4,a,abc354_a/54981846,2024-05-18,21
+45489398,abc303_d,"import sys
+import math
+from collections import deque
+sys.setrecursionlimit(10**6) #pythonの無限再起を防ぐための上限変更
+input = sys.stdin.readline
+
+# 303 D
+X, Y , Z = map(int, input().split())
+S = input()[:-1]
+
+INF = 10000000000
+Slen = len(S)
+res = [[INF]*2 for i in range(Slen+1)]
+res[0][0] = 0
+for i in range(Slen):
+    if S[i] == 'a':
+        if res[i][0] != INF:
+            res[i+1][0] = min(res[i+1][0], res[i][0] + X)
+            res[i+1][1] = min(res[i+1][1], res[i][0] + Z + Y)
+
+        if res[i][1] != INF:
+            res[i+1][0] = min(res[i+1][0], res[i][1] + Z + X)
+            res[i+1][1] = min(res[i+1][1], res[i][1] + Y)
+
+    elif S[i] == 'A':
+        if res[i][0] != INF:
+            res[i+1][1] = min(res[i+1][1], res[i][0] + Z + X)
+            res[i+1][0] = min(res[i+1][0], res[i][0] + Y)
+
+        if res[i][1] != INF:
+            res[i+1][1] = min(res[i+1][1], res[i][1] + X)
+            res[i+1][0] = min(res[i+1][0], res[i][1] + Z + Y)
+
+print(min(res[Slen][0], res[Slen][1]))","import sys
+import math
+from collections import deque
+sys.setrecursionlimit(10**6) #pythonの無限再起を防ぐための上限変更
+input = sys.stdin.readline
+
+# 303 D
+X, Y , Z = map(int, input().split())
+S = input()[:-1]
+
+INF = 1000000000000000
+Slen = len(S)
+res = [[INF]*2 for i in range(Slen+1)]
+res[0][0] = 0
+for i in range(Slen):
+    if S[i] == 'a':
+        if res[i][0] != INF:
+            res[i+1][0] = min(res[i+1][0], res[i][0] + X)
+            res[i+1][1] = min(res[i+1][1], res[i][0] + Z + Y)
+
+        if res[i][1] != INF:
+            res[i+1][0] = min(res[i+1][0], res[i][1] + Z + X)
+            res[i+1][1] = min(res[i+1][1], res[i][1] + Y)
+
+    elif S[i] == 'A':
+        if res[i][0] != INF:
+            res[i+1][1] = min(res[i+1][1], res[i][0] + Z + X)
+            res[i+1][0] = min(res[i+1][0], res[i][0] + Y)
+
+        if res[i][1] != INF:
+            res[i+1][1] = min(res[i+1][1], res[i][1] + X)
+            res[i+1][0] = min(res[i+1][0], res[i][1] + Z + Y)
+
+print(min(res[Slen][0], res[Slen][1]))",11,d,abc303_d/45489398,2023-05-27,778
+30174663,abc243_h,"mod = 998244353
+h,w = map(int,input().split())
+grid = [[0] * w for _ in range(h)]
+sx,sy = 0,0
+gx,gy = 0,0
+for i in range(h):
+    ci = input()
+    for j in range(w):
+        if ci[j] == '.':
+            grid[i][j] = 1
+        elif ci[j] == 'S':
+            sx,sy = i,j
+        elif ci[j] == 'G':
+            gx,gy = i,j
+
+def rotate(sx,sy,gx,gy,h,w,grid):
+    sx,sy = sy,h-sx-1
+    gx,gy = gy,h-gx-1
+    grid2 = [[0] * h for _ in range(w)]
+    for i in range(h):
+        for j in range(w):
+            grid2[j][h-i-1] = grid[i][j]
+    h,w = w,h
+    grid,grid2 = grid2,grid
+
+    return sx,sy,gx,gy,h,w,grid
+
+while sx > gx or sy >= gy:
+    sx,sy,gx,gy,h,w,grid = rotate(sx,sy,gx,gy,h,w,grid)
+
+if sx == gx:
+    for j in range(sy+1,gy):
+        if grid[sx][j] == 1:
+            grid[sx][j] = 2
+    if sx+1 == h:
+        pass
+    else:
+        for j in range(sy, gy+1):
+            if grid[sx+1][j] == 1:
+                grid[sx+1][j] = 3
+else:
+    for j in range(sy+1,gy+1):
+        if grid[sx][j] == 1:
+            grid[sx][j] = 2
+    for i in range(sx, gx):
+        if grid[i][gy] == 1:
+            grid[i][gy] = 2
+    for j in range(sy, gy):
+        if grid[sx+1][j] == 1:
+            grid[sx+1][j] = 3
+    for i in range(sx+1,gx+1):
+        if grid[i][gy-1] == 1:
+            grid[i][gy-1] = 3
+
+# for i in grid:
+#     print(i)
+
+m = h*w+1
+out0 = m-1
+out1 = m*2-1
+links = [set() for _ in range(m*2)] 
+for i in range(h):
+    for j in range(w):
+        if grid[i][j] == 0:
+            continue
+        num = i*w+j
+        for dx,dy in zip([-1,-1,-1,0,0,1,1,1],[-1,0,1,-1,1,-1,0,1]):
+            dx += i
+            dy += j
+            if (dx,dy) in [(-1,j), (i,-1), (i,w)]:
+                # links[num].add(out0)
+                links[num+m].add(out1)
+                links[out0].add(num)
+                # links[out1].add(num+m)
+            elif (dx,dy) == (h,j):
+                if grid[i][j] == 2:
+                    links[num].add(out1)
+                    # links[num+m].add(out0)
+                    # links[out1].add(num)
+                    links[out0].add(num+m)
+                else:
+                    # links[num].add(out0)
+                    links[num+m].add(out1)
+                    links[out0].add(num)
+                    # links[out1].add(num+m)
+            elif 0 <= dx < h and 0 <= dy < w:
+                if grid[dx][dy] == 0:
+                    continue
+                if grid[i][j] * grid[dx][dy] == 6:
+                    links[num].add(dx*w+dy + m)
+                    links[num + m].add(dx*w+dy)
+                else:
+                    # print(i,j,dx,dy,num)
+                    links[num].add(dx*w+dy)
+                    links[num + m].add(dx*w+dy + m)
+
+for i in range(m*2):
+    links[i] = list(links[i])
+
+starts = []
+for i in range(h):
+    for j in range(w):
+        if grid[i][j] == 2:
+            starts.append(i*w+j)
+
+ng_block = [0] * (m*2)
+lim = 10**8
+def dfs(root):
+    goal = root + m
+    dep = [lim] * m*2
+    cnt = [0] * m*2
+    dep[root] = 0
+    cnt[root] = 1
+
+    stack = [root]
+    go_next = True
+    while stack and go_next:
+        stack2 = []
+        while stack:
+            i = stack.pop()
+            for j in links[i]:
+                if ng_block[j] == 1:
+                    continue
+                if i == goal:
+                    go_next = False
+                if dep[j] == lim:
+                    dep[j] = dep[i] + 1
+                    cnt[j] += cnt[i]
+                    cnt[i] %= mod
+                    stack2.append(j)
+                elif dep[j] == dep[i] + 1:
+                    cnt[j] += cnt[i]
+                    cnt[j] %= mod
+        stack2,stack = stack,stack2
+    #debug
+    # if dep[goal] != -1:
+    #     print(root)
+    #     for i in range(h):
+    #         print(dep[i*w:i*w+w])
+    #     print(dep[m-1])
+    #     for i in range(h):
+    #         print(dep[i*w+m:i*w+w+m])
+    #     print(dep[m-1+m])
+    #     print('')
+    #     for i in range(h):
+    #         print(cnt[i*w:i*w+w])
+    #     print(cnt[m-1])
+    #     for i in range(h):
+    #         print(cnt[i*w+m:i*w+w+m])
+    #     print(cnt[m-1+m])
+    #     print('')
+        
+    return dep,cnt
+
+lim = 10**8
+# 外周
+dep,cnt = dfs(m-1)
+n = dep[m*2-1] - 1
+r = cnt[m*2-1]
+div2 = pow(2,mod-2,mod)
+# print(n,r)
+
+corner = {}
+if min(h,w) != 2:
+    corner = {w:1,
+            w-2:w*2-1,
+            w*(h-1)+1:w*(h-2),
+            w*(h-1)-1:w*h-2,}
+
+#テストケースをhackしますごめんなさい
+if h*w < 1000:
+    for j in range(1,w-1):
+        corner[j] = j+1
+    for j in range(w-2,1,-1):
+        corner[(h-1)*w+j] = (h-1)*w+j-1
+    for i in range(1,h-1):
+        corner[i*w+w-1] = (i+1)*w+w-1
+    for i in range(h-2,1,-1):
+        corner[i*w] = (i-1)*w
+
+for x,y in corner.items():
+    xi = x // w
+    xj = x % w
+    yi = y // w
+    yj = y % w
+    if grid[xi][xj] * grid[yi][yj] == 0:
+        continue
+    dep,cnt = dfs(x)
+    if dep[x+m] < n:
+        r = 0
+        break
+    elif dep[x+m] > n:
+        continue
+    
+    if grid[xi][xj] * grid[yi][yj] == 6:
+        if dep[y] == dep[x+m]-1:
+            r -= cnt[y] * 2
+            r %= mod
+    else:
+        if dep[y+m] == dep[x+m]-1:
+            r -= cnt[y+m] * 2
+            r %= mod
+else:
+    r *= div2
+    r %= mod
+
+# print(n,r)
+
+for x in starts:
+    i = x // w
+    j = x % w
+    dep,cnt = dfs(x)
+    ng_block[x] = 1
+    ng_block[x+m] = 1
+    if dep[x+m] < n:
+        n = dep[x+m]
+        r = cnt[x+m] * div2
+        r %= mod
+    elif dep[x+m] == n:
+        r += cnt[x+m] * div2
+        r %= mod
+
+if n >= lim-1:
+    print('No')
+else:
+    print('Yes')
+    print('{} {}'.format(n,r))","mod = 998244353
+h,w = map(int,input().split())
+grid = [[0] * w for _ in range(h)]
+sx,sy = 0,0
+gx,gy = 0,0
+for i in range(h):
+    ci = input()
+    for j in range(w):
+        if ci[j] == '.':
+            grid[i][j] = 1
+        elif ci[j] == 'S':
+            sx,sy = i,j
+        elif ci[j] == 'G':
+            gx,gy = i,j
+
+def rotate(sx,sy,gx,gy,h,w,grid):
+    sx,sy = sy,h-sx-1
+    gx,gy = gy,h-gx-1
+    grid2 = [[0] * h for _ in range(w)]
+    for i in range(h):
+        for j in range(w):
+            grid2[j][h-i-1] = grid[i][j]
+    h,w = w,h
+    grid,grid2 = grid2,grid
+
+    return sx,sy,gx,gy,h,w,grid
+
+while sx > gx or sy >= gy:
+    sx,sy,gx,gy,h,w,grid = rotate(sx,sy,gx,gy,h,w,grid)
+
+if sx == gx:
+    for j in range(sy+1,gy):
+        if grid[sx][j] == 1:
+            grid[sx][j] = 2
+    if sx+1 == h:
+        pass
+    else:
+        for j in range(sy, gy+1):
+            if grid[sx+1][j] == 1:
+                grid[sx+1][j] = 3
+else:
+    for j in range(sy+1,gy+1):
+        if grid[sx][j] == 1:
+            grid[sx][j] = 2
+    for i in range(sx, gx):
+        if grid[i][gy] == 1:
+            grid[i][gy] = 2
+    for j in range(sy, gy):
+        if grid[sx+1][j] == 1:
+            grid[sx+1][j] = 3
+    for i in range(sx+1,gx+1):
+        if grid[i][gy-1] == 1:
+            grid[i][gy-1] = 3
+
+# for i in grid:
+#     print(i)
+
+m = h*w+1
+out0 = m-1
+out1 = m*2-1
+links = [set() for _ in range(m*2)] 
+for i in range(h):
+    for j in range(w):
+        if grid[i][j] == 0:
+            continue
+        num = i*w+j
+        for dx,dy in zip([-1,-1,-1,0,0,1,1,1],[-1,0,1,-1,1,-1,0,1]):
+            dx += i
+            dy += j
+            if (dx,dy) in [(-1,j), (i,-1), (i,w)]:
+                # links[num].add(out0)
+                links[num+m].add(out1)
+                links[out0].add(num)
+                # links[out1].add(num+m)
+            elif (dx,dy) == (h,j):
+                if grid[i][j] == 2:
+                    links[num].add(out1)
+                    # links[num+m].add(out0)
+                    # links[out1].add(num)
+                    links[out0].add(num+m)
+                else:
+                    # links[num].add(out0)
+                    links[num+m].add(out1)
+                    links[out0].add(num)
+                    # links[out1].add(num+m)
+            elif 0 <= dx < h and 0 <= dy < w:
+                if grid[dx][dy] == 0:
+                    continue
+                if grid[i][j] * grid[dx][dy] == 6:
+                    links[num].add(dx*w+dy + m)
+                    links[num + m].add(dx*w+dy)
+                else:
+                    # print(i,j,dx,dy,num)
+                    links[num].add(dx*w+dy)
+                    links[num + m].add(dx*w+dy + m)
+
+for i in range(m*2):
+    links[i] = list(links[i])
+
+starts = []
+for i in range(h):
+    for j in range(w):
+        if grid[i][j] == 2:
+            starts.append(i*w+j)
+
+ng_block = [0] * (m*2)
+lim = 10**8
+def dfs(root):
+    goal = root + m
+    dep = [lim] * m*2
+    cnt = [0] * m*2
+    dep[root] = 0
+    cnt[root] = 1
+
+    stack = [root]
+    go_next = True
+    while stack and go_next:
+        stack2 = []
+        while stack:
+            i = stack.pop()
+            for j in links[i]:
+                if ng_block[j] == 1:
+                    continue
+                if i == goal:
+                    go_next = False
+                if dep[j] == lim:
+                    dep[j] = dep[i] + 1
+                    cnt[j] += cnt[i]
+                    cnt[i] %= mod
+                    stack2.append(j)
+                elif dep[j] == dep[i] + 1:
+                    cnt[j] += cnt[i]
+                    cnt[j] %= mod
+        stack2,stack = stack,stack2
+    #debug
+    # if dep[goal] != -1:
+    #     print(root)
+    #     for i in range(h):
+    #         print(dep[i*w:i*w+w])
+    #     print(dep[m-1])
+    #     for i in range(h):
+    #         print(dep[i*w+m:i*w+w+m])
+    #     print(dep[m-1+m])
+    #     print('')
+    #     for i in range(h):
+    #         print(cnt[i*w:i*w+w])
+    #     print(cnt[m-1])
+    #     for i in range(h):
+    #         print(cnt[i*w+m:i*w+w+m])
+    #     print(cnt[m-1+m])
+    #     print('')
+        
+    return dep,cnt
+
+lim = 10**8
+# 外周
+dep,cnt = dfs(m-1)
+n = dep[m*2-1] - 1
+r = cnt[m*2-1]
+div2 = pow(2,mod-2,mod)
+# print(n,r)
+
+corner = {}
+if min(h,w) != 2:
+    corner = {w:1,
+            w-2:w*2-1,
+            w*(h-1)+1:w*(h-2),
+            w*(h-1)-1:w*h-2,}
+
+#テストケースをhackしますごめんなさい
+if h*w < 200:
+    for j in range(1,w-1):
+        corner[j] = j+1
+    for j in range(w-2,1,-1):
+        corner[(h-1)*w+j] = (h-1)*w+j-1
+    for i in range(1,h-1):
+        corner[i*w+w-1] = (i+1)*w+w-1
+    for i in range(h-2,1,-1):
+        corner[i*w] = (i-1)*w
+
+for x,y in corner.items():
+    xi = x // w
+    xj = x % w
+    yi = y // w
+    yj = y % w
+    if grid[xi][xj] * grid[yi][yj] == 0:
+        continue
+    dep,cnt = dfs(x)
+    if dep[x+m] < n:
+        r = 0
+        break
+    elif dep[x+m] > n:
+        continue
+    
+    if grid[xi][xj] * grid[yi][yj] == 6:
+        if dep[y] == dep[x+m]-1:
+            r -= cnt[y] * 2
+            r %= mod
+    else:
+        if dep[y+m] == dep[x+m]-1:
+            r -= cnt[y+m] * 2
+            r %= mod
+else:
+    r *= div2
+    r %= mod
+
+# print(n,r)
+
+for x in starts:
+    i = x // w
+    j = x % w
+    dep,cnt = dfs(x)
+    ng_block[x] = 1
+    ng_block[x+m] = 1
+    if dep[x+m] < n:
+        n = dep[x+m]
+        r = cnt[x+m] * div2
+        r %= mod
+    elif dep[x+m] == n:
+        r += cnt[x+m] * div2
+        r %= mod
+
+if n >= lim-1:
+    print('No')
+else:
+    print('Yes')
+    print('{} {}'.format(n,r))",171,h,abc243_h/30174663,2022-03-12,3884
